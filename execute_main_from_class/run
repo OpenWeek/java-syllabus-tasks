@@ -36,7 +36,8 @@ def add_indentation_level(to_indent):
 def compile_and_run():
     parsetemplate('student/Code.java')
     with open("student/Code.java") as f:
-        classname = re.search("public\\s*([a-zA-Z]*)\\s*\\{", f.read()).group(1)
+        classname = re.search("public\\s*class\\s*([a-zA-Z]*)\\s*\\{", f.read())
+        classname = classname.group(1) if classname is not None else None
     filename = "student/Code.java"
     classpath = "student/Code"
     if classname is not None:

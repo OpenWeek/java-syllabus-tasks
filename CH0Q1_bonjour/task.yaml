@@ -6,18 +6,18 @@ environment: java7
 evaluate: best
 groups: false
 limits:
+    time: '30'
     memory: '200'
     output: '2'
-    time: '30'
 name: '"Bonjour !"'
 network_grading: false
 order: 0
 problems:
     q1:
-        language: Java
-        name: Changement de code
         type: code
         header: Changer l code
+        name: Changement de code
+        language: Java
 stored_submissions: 0
 submission_limit:
     amount: -1
