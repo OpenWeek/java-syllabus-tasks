@@ -1,0 +1,65 @@
+#!/bin/python3
+
+import json
+import subprocess
+import shlex
+import sys
+import re
+import os
+from json import JSONDecodeError
+
+from inginious import feedback
+
+def compile_files(files):
+    """
+    :param args: the javac command with the javac args, whithout the files to compile
+    :return: (outother, output), the stderr of the compilation of student/Exercice.java and student/ExerciceStu.java
+    """
+    output = ""
+    with open('log.out', 'w+', encoding="utf-8") as f:
+        l = ['javac'] + files
+        print(l)
+        subprocess.call(['javac'] + files, universal_newlines=True, stderr=f)
+        f.seek(0)
+        output = f.read()
+
+    return output
+
+def parsetemplate(f):
+    subprocess.call(['parsetemplate', '-o', f, f],
+                    universal_newlines=True)
+
+def add_indentation_level(to_indent):
+    return 4*' ' + (4*' ').join(to_indent.splitlines(keepends=True))
+
+
+def compile_and_run():
+    parsetemplate('student/Code.java')
+    with open("student/Code.java") as f:
+        classname = re.search("public\\s*([a-zA-Z]*)\\s*\\{", f.read()).group(1)
+    filename = "student/Code.java"
+    classpath = "student/Code"
+    if classname is not None:
+        filename = "student/%s.java" % classname
+        classpath = "student/%s" % classname
+        os.rename("student/Code.java", filename)
+    code_block = ".. code-block::\n\n"
+    output = compile_files([filename])
+    if output != "":
+        output = add_indentation_level(output)
+        feed = "Le programme ne compile pas: \n\n%s%s\n" % (code_block, output)
+        feedback.set_global_result('failed')
+        feedback.set_global_feedback(feed)
+        exit()
+    with open('out.txt', 'w+', encoding="utf-8") as f:
+        proc = subprocess.Popen(['java', classpath], universal_newlines=True, stdout=f)
+        proc.communicate()
+        f.flush()
+        f.seek(0)
+        out = add_indentation_level(f.read())
+        feedback.set_global_result('success')
+        feed = "Le code affiche :\n\n%s%s\n" % (code_block, out)
+        feedback.set_global_feedback(feed)
+
+if __name__ == '__main__':
+    compile_and_run()
