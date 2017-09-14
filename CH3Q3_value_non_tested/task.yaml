@@ -2,7 +2,7 @@ accessible: true
 author: Antoine Lambot & Maxime Mulamba
 context: 'Ce code comporte une erreur. En effet, il y a une valeur pour la variable
     **age** qui n''est pas testée, laquelle ? '
-environment: java7
+environment: mcq
 evaluate: best
 groups: false
 limits:
