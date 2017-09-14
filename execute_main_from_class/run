@@ -59,7 +59,7 @@ def compile_and_run():
         f.seek(0)
         out = add_indentation_level(f.read())
         feedback.set_global_result('success')
-        feed = "Le code affiche :\n\n%s%s\n" % (code_block, out)
+        feed = "Le code affiche :\n\n%s%s\n" % ((code_block, out) if out.strip() != "" else ("", ""))
         feedback.set_global_feedback(feed)
 
 if __name__ == '__main__':
