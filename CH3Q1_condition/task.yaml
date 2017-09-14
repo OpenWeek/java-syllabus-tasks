@@ -6,23 +6,23 @@ environment: java7
 evaluate: best
 groups: false
 limits:
-    output: '2'
-    memory: '100'
     time: '30'
+    memory: '100'
+    output: '2'
 name: Expressions conditionnelles 1 - if
 network_grading: false
 order: 3
 problems:
     q1:
-        name: ''
+        type: code
         header: |-
             .. code-block:: java
 
                 if(age < 13){
                     majeur = true;
                 }
+        name: ''
         language: Java
-        type: code
 stored_submissions: 0
 submission_limit:
     amount: -1
