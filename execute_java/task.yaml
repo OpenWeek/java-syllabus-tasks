@@ -12,10 +12,10 @@ name: Exécute du code java et affiche la sortie standard
 network_grading: false
 problems:
     q1:
-        language: java
-        name: code a exécuter
-        header: ''
         type: code
+        header: ''
+        name: code a exécuter
+        language: java
 stored_submissions: 0
 submission_limit:
     amount: -1
